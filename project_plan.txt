@@ -6,4 +6,4 @@ Algorithmic Plan [5 pts]: A detailed algorithmic plan for how you will approach 
 
 Version Control Plan [5 pts]: A short description and image demonstrating how you are using version control to back up your code. Notes:
 You must back up your code somehow!!!
-Your backups must not be on your computer (ideally, store them in the cloud) yes
+Your backups must not be on your computer (ideally, store them in the cloud) yesyesw
