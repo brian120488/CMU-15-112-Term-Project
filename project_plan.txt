@@ -1,7 +1,0 @@
-Project Description [5 pts]: Bootleg Terraria
-
-Structural Plan [5 pts]: A structural plan for how the finalized project will be organized in different functions, files and/or objects.
-
-Algorithmic Plan [5 pts]: Terrain Generation
-
-Version Control Plan [5 pts]: Github

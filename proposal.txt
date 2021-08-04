@@ -1,0 +1,7 @@
+Project Description [5 pts]: Bootleg Terraria
+
+Structural Plan [5 pts]: No idea.
+
+Algorithmic Plan [5 pts]: Terrain Generation
+
+Version Control Plan [5 pts]: Github
