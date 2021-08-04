@@ -1,7 +1,8 @@
 from cmu_112_graphics import *
 
 def runTerraria():
-    runApp(width=1920,height=1080)
+    width, height = 1920, 1080
+    runApp(width=width, height=height)
 
 def main():
     runTerraria()
