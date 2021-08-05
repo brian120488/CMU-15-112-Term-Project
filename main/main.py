@@ -6,6 +6,7 @@ def runTerraria():
     runApp(width=width, height=height)
 
 def appStarted(app):
+    app.timerDelay = 1
     app.player = Player(app)
     app.terrain = [[1]*app.width]
 
