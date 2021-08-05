@@ -7,6 +7,7 @@ def runTerraria():
 
 def appStarted(app):
     app.player = Player(app)
+    app.terrain = [[1]*app.width]
 
 def keyPressed(app, event):
     if event.key == "a":
