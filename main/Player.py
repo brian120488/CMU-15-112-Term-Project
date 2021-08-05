@@ -1,19 +1,13 @@
 from cmu_112_graphics import *
 
 class Player(object):
-    walkingSprites: list
-    spriteCounter: int = 0
-    width: int = 20
-    height: int = 30
-    x: int
-    y: int
-    speed: int = 10  # can make less jittery?
-    direction: int = 1
-
-
     def __init__(self, app):
         self.x, self.y = app.width / 2, app.height / 2
-
+        self.width, self.height = 20, 30
+        self.spriteCounter = 0
+        self.speed = 10
+        self.direction = 1
+        
         # initializes sprites
         path = "sprites/player_sprites.png"
         spritestrip = app.loadImage(path)
