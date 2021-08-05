@@ -8,19 +8,19 @@ def runTerraria():
 def appStarted(app):
     app.player = Player(app)
 
-def keyPressed(app):
-    pass
+def keyPressed(app, event):
+    if event.key == "a":
+        app.player.move(-1)
+    elif event.key == "d":
+        app.player.move(1)
 
-def mousePressed(app):
+def mousePressed(app, event):
     pass
 
 def redrawAll(app, canvas):
-    for i in range(len(app.player.sprites)):
-        canvas.create_image(20 * i, 200, image=ImageTk.PhotoImage(app.player.sprites[i]), anchor="w")
-        canvas.create_line(0, 220, 20*19, 220)
+    app.player.draw(app, canvas)
 
 def main():
-    print('hi')
     runTerraria()
 
 if __name__ == "__main__":
