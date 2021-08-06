@@ -7,18 +7,16 @@ class Player(object):
         self.spriteCounter = 0
         self.speed = 10
         self.direction = 1
-        
+        self.onGround = False
+        self.gravity = 5
+
         # initializes sprites
         path = "sprites/player_sprites.png"
         spritestrip = app.loadImage(path)
-        numSprites = 19
         self.walkingSprites = []
-        for i in range(6, numSprites):
+        for i in range(6, 19):
             sprite = spritestrip.crop((self.width * i, 0, self.width * (i + 1), self.height))
             self.walkingSprites.append(sprite.transpose(Image.FLIP_LEFT_RIGHT))
-
-    def __repr__(self):
-        return "hi"
 
     def draw(self, app, canvas):
         sprite = self.walkingSprites[self.spriteCounter]
@@ -31,3 +29,6 @@ class Player(object):
                 self.walkingSprites[i] = self.walkingSprites[i].transpose(Image.FLIP_LEFT_RIGHT)
         self.x += self.speed * direction
         self.spriteCounter = (self.spriteCounter + 1) % len(self.walkingSprites)
+
+    def fall(self, app):
+        if 

@@ -27,18 +27,27 @@ def keyPressed(app, event):
 def mousePressed(app, event):
     pass
 
+def timerFired(app):
+    if not player.onGround:
+        player.fall(app)
+
 def redrawAll(app, canvas):
     app.player.draw(app, canvas)
+    drawGrid(app, canvas)
+    drawBlocks(app, canvas)
+
+def drawGrid(app, canvas):
     for i in range(0, app.width, 16):
         canvas.create_line(i, 0, i, app.height)
     for i in range(0, app.height, 20):
         canvas.create_line(0, i, app.width, i)
+
+def drawBlocks(app, canvas):
     for row in range(len(app.terrain)):
         for col in range(len(app.terrain[0])):
             block = app.terrain[row][col]
             if block != None:
                 block.draw(app, canvas)
-
 
 def main():
     runTerraria()
