@@ -9,17 +9,29 @@ class Block(object):
         self.col = col
         self.material = material
         self.sprite = app.loadImage(f"sprites/{material}.png")
+
+    # @staticmethod
+    # def moveAllBlocks(app, drow, dcol):
+    #     rows = len(app.terrain)
+    #     cols = len(app.terrain[0])
+    #     for i in range(rows):
+    #         for j in range(cols):
+    #             block = app.terrain[i][j]
+    #             if block != None:
+    #                 block.row += drow
+    #                 block.col += dcol
     
+    def getXY(self):
+        x = Block.width * self.col + Block.width / 2
+        y = Block.height * self.row + Block.height / 2
+        return x, y
+
     def draw(self, app, canvas):
-        x0, y0, x1, y1 = self.getCellBounds(app)
-        x = (x0 + x1) / 2
-        y = (y0 + y1) / 2
+        x, y = self.getXY()
+        x -= app.scrollX
         canvas.create_image(x, y, image=ImageTk.PhotoImage(self.sprite))
-    
-    def getCellBounds(self, app):
-        x0 = Block.width * self.col
-        y0 = Block.height * self.row
-        x1 = x0 + Block.width
-        y1 = y0 + Block.height
-        return x0, y0, x1, y1
+
+    def getTop(self):
+        _, y = self.getXY()
+        return int(y - Block.height / 2)
 
