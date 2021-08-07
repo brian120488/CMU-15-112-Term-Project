@@ -21,20 +21,21 @@ class Block(object):
     #                 block.row += drow
     #                 block.col += dcol
     
-    def getXY(self):
+    def getXY(self, app):
         x = Block.width * self.col + Block.width / 2
         y = Block.height * self.row + Block.height / 2
+        x += app.scrollX
+        y += app.scrollY
         return x, y
 
     def draw(self, app, canvas):
-        x, y = self.getXY()
-        x -= app.scrollX
+        x, y = self.getXY(app)
         canvas.create_image(x, y, image=ImageTk.PhotoImage(self.sprite))
 
-    def getTop(self):
-        _, y = self.getXY()
-        return int(y - Block.height / 2)
+    def getTop(self, app):
+        _, y = self.getXY(app)
+        return int(y - Block.height / 2) + 5
     
-    def getBottom(self):
-        _, y = self.getXY()
+    def getBottom(self, app):
+        _, y = self.getXY(app)
         return int(y + Block.height / 2)

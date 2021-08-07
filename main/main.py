@@ -14,29 +14,36 @@ def appStarted(app):
 
     app.player = Player(app)
     app.scrollX = 0
+    app.scrollY = 0
+    app.scrollDY = 0
+    app.gravity = 0.5
+
     app.terrain = [[None] * app.cols for _ in range(app.rows)]
     for col in range(len(app.terrain[0])):
-        app.terrain[20][col] = Block(app, 20, col, "grass_block")
+        app.terrain[20][col] = Block(app, 25, col, "grass_block")
 
-# TODO: implement scrollY
 def keyPressed(app, event):
     if event.key == "a":
         app.player.move(-1)
-        #Block.moveAllBlocks(app, 0, 1)
-        app.scrollX -= 10
+        app.scrollX += app.player.speed
     elif event.key == "d":
         app.player.move(1)
         #Block.moveAllBlocks(app, 0, -1)
-        app.scrollX += 10
+        app.scrollX -= app.player.speed
     elif event.key == "Space" and app.player.onGround(app):
-        app.player.jump(app)
+        #app.player.jump(app)
+        app.scrollDY = app.player.jumpSpeed
+        app.scrollY += app.scrollDY
 
 def mousePressed(app, event):
     pass
 
 def timerFired(app):
-    if not app.player.onGround(app):
-        app.player.fall(app)
+    if app.player.onGround(app):
+        pass
+    else:
+        app.scrollDY -= app.gravity
+        app.scrollY += app.scrollDY
 
 def redrawAll(app, canvas):
     #drawGrid(app, canvas)

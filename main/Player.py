@@ -5,12 +5,9 @@ class Player(object):
         self.x, self.y = app.width / 2, app.height / 2
         self.width, self.height = 20, 30
         self.spriteCounter = 0
-        self.speed = 10
         self.direction = 1
-        self.jumpSpeed = -10
-        #self.onGround = False
-        self.gravity = 1
-        self.dy = 0
+        self.speed = 10
+        self.jumpSpeed = 10
 
         # initializes sprites
         path = "sprites/player_sprites.png"
@@ -31,26 +28,15 @@ class Player(object):
                 self.walkingSprites[i] = self.walkingSprites[i].transpose(Image.FLIP_LEFT_RIGHT)
         self.spriteCounter = (self.spriteCounter + 1) % len(self.walkingSprites)
 
-    def jump(self, app):
-        self.dy = self.jumpSpeed
-        self.y += self.dy
-        
-    def fall(self, app):
-        self.dy += self.gravity
-        self.y += self.dy
-
     def onGround(self, app):
-        margin = 5 # margin of an error
         for row in app.terrain:
             for block in row:
                 if block != None:
-                    if block.getTop() <= self.getBottom() <= block.getBottom():
-                        self.y = block.getTop() - self.height / 2 + margin
+                    if block.getTop(app) <= self.getBottom() <= block.getBottom(app):
+                        dif = block.getTop(app) - self.getBottom()
+                        app.scrollY -= dif # why is it not +=?
                         return True
         return False
 
     def getBottom(self):
         return int(self.y + self.height / 2)
-
-def withinNum(x, y, n = 1):
-    return 0 <= abs(x - y) <= n
