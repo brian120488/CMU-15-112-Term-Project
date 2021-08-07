@@ -18,6 +18,7 @@ def appStarted(app):
     for col in range(len(app.terrain[0])):
         app.terrain[20][col] = Block(app, 20, col, "grass_block")
 
+# TODO: implement scrollY
 def keyPressed(app, event):
     if event.key == "a":
         app.player.move(-1)
@@ -27,6 +28,8 @@ def keyPressed(app, event):
         app.player.move(1)
         #Block.moveAllBlocks(app, 0, -1)
         app.scrollX += 10
+    elif event.key == "Space" and app.player.onGround(app):
+        app.player.jump(app)
 
 def mousePressed(app, event):
     pass

@@ -7,7 +7,7 @@ class Player(object):
         self.spriteCounter = 0
         self.speed = 10
         self.direction = 1
-        self.jumpSpeed = -20
+        self.jumpSpeed = -10
         #self.onGround = False
         self.gravity = 1
         self.dy = 0
@@ -32,8 +32,8 @@ class Player(object):
         self.spriteCounter = (self.spriteCounter + 1) % len(self.walkingSprites)
 
     def jump(self, app):
-        if self.onGround(app):
-            self.dy = self.jumpSpeed
+        self.dy = self.jumpSpeed
+        self.y += self.dy
         
     def fall(self, app):
         self.dy += self.gravity
@@ -44,7 +44,7 @@ class Player(object):
         for row in app.terrain:
             for block in row:
                 if block != None:
-                    if withinNum(self.getBottom(), block.getTop(), margin):
+                    if block.getTop() <= self.getBottom() <= block.getBottom():
                         self.y = block.getTop() - self.height / 2 + margin
                         return True
         return False

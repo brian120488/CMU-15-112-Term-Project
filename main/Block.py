@@ -34,4 +34,7 @@ class Block(object):
     def getTop(self):
         _, y = self.getXY()
         return int(y - Block.height / 2)
-
+    
+    def getBottom(self):
+        _, y = self.getXY()
+        return int(y + Block.height / 2)
