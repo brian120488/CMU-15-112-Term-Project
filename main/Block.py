@@ -10,17 +10,6 @@ class Block(object):
         self.material = material
         self.sprite = app.loadImage(f"sprites/{material}.png")
 
-    # @staticmethod
-    # def moveAllBlocks(app, drow, dcol):
-    #     rows = len(app.terrain)
-    #     cols = len(app.terrain[0])
-    #     for i in range(rows):
-    #         for j in range(cols):
-    #             block = app.terrain[i][j]
-    #             if block != None:
-    #                 block.row += drow
-    #                 block.col += dcol
-    
     def getXY(self, app):
         x = Block.width * self.col + Block.width / 2
         y = Block.height * self.row + Block.height / 2

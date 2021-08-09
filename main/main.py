@@ -6,8 +6,15 @@ def runTerraria():
     width, height = 1280, 720
     runApp(width=width, height=height)
 
+
 # TODO: make the terrain into set instead?
+# check for keyreleased for better movement
+# set random button to make a parabola jump?
+# add citations
+# proposal.txt
+
 def appStarted(app):
+    app._root.resizable(False, False)
     app.timerDelay = 10
     app.rows = int(app.height / Block.height)
     app.cols = int(app.width / Block.width)
@@ -42,11 +49,11 @@ def timerFired(app):
     if app.player.onGround(app):
         pass
     else:
+        # player falling
         app.scrollDY -= app.gravity
         app.scrollY += app.scrollDY
 
 def redrawAll(app, canvas):
-    #drawGrid(app, canvas)
     drawBlocks(app, canvas)
     app.player.draw(app, canvas)
 
