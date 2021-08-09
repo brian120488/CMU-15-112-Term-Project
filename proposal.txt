@@ -2,6 +2,6 @@ Project Description [5 pts]: Bootleg Terraria
 
 Structural Plan [5 pts]: Player class.
 
-Algorithmic Plan [5 pts]: Terrain Generation (with perlin noise?)
+Algorithmic Plan [5 pts]: Terrain Generation (with perlin noise? also voronoi)
 
 Version Control Plan [5 pts]: Github https://github.com/brian120488/Term-Project
