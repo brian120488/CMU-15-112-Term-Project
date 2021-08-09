@@ -28,3 +28,11 @@ class Block(object):
     def getBottom(self, app):
         _, y = self.getXY(app)
         return int(y + Block.height / 2)
+    
+    def getLeft(self, app):
+        x, _ = self.getXY(app)
+        return int(x - Block.width / 2)
+        
+    def getRight(self, app):
+        x, _ = self.getXY(app)
+        return int(x + Block.width / 2)

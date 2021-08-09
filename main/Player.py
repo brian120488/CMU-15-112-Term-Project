@@ -22,7 +22,8 @@ class Player(object):
         sprite = self.walkingSprites[self.spriteCounter]
         canvas.create_image(self.x, self.y, image=ImageTk.PhotoImage(sprite))
 
-    def move(self, direction):
+    def moveAnimation(self, direction):
+        #if direction != self.direction:
         if direction != self.direction:
             self.direction = direction
             for i in range(len(self.walkingSprites)):
@@ -33,7 +34,8 @@ class Player(object):
         for row in app.terrain:
             for block in row:
                 if block != None:
-                    if block.getTop(app) <= self.getBottom() <= block.getBottom(app):
+                    if (block.getTop(app) <= self.getBottom() <= block.getBottom(app)
+                        and block.getLeft(app) <= self.x <= block.getRight(app)):
                         app.scrollDY = 0
                         dif = self.getBottom() - block.getTop(app)
                         app.scrollY += dif

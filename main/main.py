@@ -32,31 +32,33 @@ def appStarted(app):
 def keyPressed(app, event):
     if event.key == "a":
         app.player.isMoving = True
-        app.player.move(-1)
-        #app.scrollX += app.player.speed
+        app.player.moveAnimation(-1)
     elif event.key == "d":
         app.player.isMoving = True
-        app.player.move(1)
-        #Block.moveAllBlocks(app, 0, -1)
-        #app.scrollX -= app.player.speed
+        app.player.moveAnimation(1)
+    elif event.key == "s":
+        app.player.isMoving = False
     elif event.key == "Space" and app.player.onGround(app):
         #app.player.jump(app)
         app.scrollDY = app.player.jumpSpeed
         app.scrollY += app.scrollDY
 
+# runs even when key not released?
 def keyReleased(app, event):
-    app.player.isMoving = False
+    #app.player.isMoving = False
+    pass
 
 def mousePressed(app, event):
     pass
 
 def timerFired(app):
-    if app.player.onGround(app) and app.player.isMoving:
-        app.player.move(app.player.direction)
+    if app.player.isMoving:
+        app.player.moveAnimation(app.player.direction)
         if app.player.direction == -1:
             app.scrollX += app.player.speed 
-        else:
-            app.scrollX += app.player.speed 
+        elif app.player.direction == 1:
+            app.scrollX -= app.player.speed 
+    if app.player.onGround(app):
         pass
     else:
         # player falling
