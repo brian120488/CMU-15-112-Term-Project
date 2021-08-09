@@ -9,7 +9,7 @@ def runTerraria():
 
 
 # TODO:
-# check for keyreleased for better movement
+# make keyreleased work
 # set random button to make a parabola jump?
 # add citations
 # proposal.txt
@@ -27,7 +27,7 @@ def appStarted(app):
     app.scrollX = 0
     app.scrollY = 0
     app.scrollDY = 0
-    app.gravity = 0.5
+    app.gravity = 1
 
     app.terrain = [[None] * app.cols for _ in range(app.rows)]
     for col in range(len(app.terrain[0])):

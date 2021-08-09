@@ -4,9 +4,9 @@ Hopefully I can add features such as building, mining, AI, etc.
 
 Structural Plan [5 pts]: 
     • Player and Block class
-    • the usual controller and draw functions
-    • a perlin class to generate noise
-    ª possibly voronoi
+    • The usual controller and draw functions
+    • Perlin class to generate noise
+    • Possibly voronoi for biomes
 
 Algorithmic Plan [5 pts]: 
     • Collision Detection by checking the edges of each entity.
