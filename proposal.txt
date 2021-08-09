@@ -1,7 +1,7 @@
-Project Description [5 pts]: Bootleg Terraria
+Project Description [5 pts]: I am replicating Terraria (basically 2D Minecraft)
 
-Structural Plan [5 pts]: Player class.
+Structural Plan [5 pts]: Player and Block class, the usual controller and draw functions, perlin
 
-Algorithmic Plan [5 pts]: Terrain Generation (with perlin noise? also voronoi)
+Algorithmic Plan [5 pts]: Collision Detectioin and Terrain Generation (with perlin noise and maybe voronoi for biomes)
 
 Version Control Plan [5 pts]: Github https://github.com/brian120488/Term-Project
