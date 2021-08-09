@@ -4,9 +4,7 @@ import random
 class Perlin(object):
     grid = [None] * 100
     gradients = [random.random() * 2 - 1 for _ in range(len(grid))]
-    amplitude = 1
-    frequency = 1
-    
+
     @staticmethod
     def perlin(x):
         left = Perlin.gradients[int(x)]

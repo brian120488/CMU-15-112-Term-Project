@@ -33,7 +33,8 @@ def appStarted(app):
     for col in range(len(app.terrain[0])):
         app.terrain[20][col] = Block(app, 25, col, "grass_block")
 
-    app.perlin = Perlin()
+    app.ampl = 1
+    app.freq = 1
 
 def keyPressed(app, event):
     if event.key == "a":
@@ -87,11 +88,10 @@ def drawBlocks(app, canvas):
                 block.draw(app, canvas)
 
 def drawPerlin(app, canvas):
-    amplitude = 10
     x = 0
     while x < 50:
         x += 0.1
-        y = app.perlin.perlin(x)
+        y = Perlin.perlin(x)
         midX = app.width / 2
         midY = app.height / 2
         canvas.create_oval(x*100, 100 + y*100, x*100 + 10, 100 + y*100 + 10, fill="black")
