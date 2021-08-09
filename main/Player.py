@@ -18,17 +18,50 @@ class Player(object):
             sprite = spritestrip.crop((self.width * i, 0, self.width * (i + 1), self.height))
             self.walkingSprites.append(sprite.transpose(Image.FLIP_LEFT_RIGHT))
 
+        self.fallingSprites = []
+        for i in range(5, 6):
+            sprite = spritestrip.crop((self.width * i, 0, self.width * (i + 1), self.height))
+            self.fallingSprites.append(sprite.transpose(Image.FLIP_LEFT_RIGHT))
+            
+        self.standingSprites = []
+        for i in range(1):
+            sprite = spritestrip.crop((self.width * i, 0, self.width * (i + 1), self.height))
+            self.standingSprites.append(sprite.transpose(Image.FLIP_LEFT_RIGHT)) 
+        
+        self.currSprite = self.standingSprites[0]
+
     def draw(self, app, canvas):
-        sprite = self.walkingSprites[self.spriteCounter]
-        canvas.create_image(self.x, self.y, image=ImageTk.PhotoImage(sprite))
+        canvas.create_image(self.x, self.y, image=ImageTk.PhotoImage(self.currSprite))
+
+    def rotateAllAnimations(self):
+        for i in range(len(self.walkingSprites)):
+            self.walkingSprites[i] = self.walkingSprites[i].transpose(Image.FLIP_LEFT_RIGHT)
+        for i in range(len(self.fallingSprites)):
+            self.fallingSprites[i] = self.fallingSprites[i].transpose(Image.FLIP_LEFT_RIGHT)
+        for i in range(len(self.standingSprites)):
+            self.standingSprites[i] = self.standingSprites[i].transpose(Image.FLIP_LEFT_RIGHT)
+
 
     def moveAnimation(self, direction):
-        #if direction != self.direction:
         if direction != self.direction:
             self.direction = direction
-            for i in range(len(self.walkingSprites)):
-                self.walkingSprites[i] = self.walkingSprites[i].transpose(Image.FLIP_LEFT_RIGHT)
+            self.rotateAllAnimations()
         self.spriteCounter = (self.spriteCounter + 1) % len(self.walkingSprites)
+        self.currSprite = self.walkingSprites[self.spriteCounter]
+
+    def fallAnimation(self, direction):
+        if direction != self.direction:
+            self.direction = direction
+            self.rotateAllAnimations()
+        self.spriteCounter = (self.spriteCounter + 1) % len(self.fallingSprites)
+        self.currSprite = self.fallingSprites[self.spriteCounter]
+
+    def standAnimation(self, direction):
+        if direction != self.direction:
+            self.direction = direction
+            self.rotateAllAnimations()
+        self.spriteCounter = (self.spriteCounter + 1) % len(self.standingSprites)
+        self.currSprite = self.standingSprites[self.spriteCounter]
 
     def onGround(self, app):
         for row in app.terrain:

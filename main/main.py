@@ -58,13 +58,14 @@ def timerFired(app):
             app.scrollX += app.player.speed 
         elif app.player.direction == 1:
             app.scrollX -= app.player.speed 
-    if app.player.onGround(app):
-        pass
-    else:
-        # player falling
+
+    if not app.player.onGround(app):
+        app.player.fallAnimation(app.player.direction)
         app.scrollDY -= app.gravity
         app.scrollY += app.scrollDY
-    #print(app.scrollY)
+
+    if app.player.onGround(app) and not app.player.isMoving:
+        app.player.standAnimation(app.player.direction)
 
 
 def redrawAll(app, canvas):
