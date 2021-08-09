@@ -1,6 +1,7 @@
 from cmu_112_graphics import *
 from Player import Player
 from Block import Block
+from Perlin import Perlin
 
 def runTerraria():
     width, height = 1280, 720
@@ -28,6 +29,8 @@ def appStarted(app):
     app.terrain = [[None] * app.cols for _ in range(app.rows)]
     for col in range(len(app.terrain[0])):
         app.terrain[20][col] = Block(app, 25, col, "grass_block")
+
+    app.perlin = Perlin()
 
 def keyPressed(app, event):
     if event.key == "a":
@@ -71,6 +74,7 @@ def timerFired(app):
 def redrawAll(app, canvas):
     drawBlocks(app, canvas)
     app.player.draw(app, canvas)
+    drawPerlin(app, canvas)
 
 def drawBlocks(app, canvas):
     for row in range(len(app.terrain)):
@@ -79,6 +83,16 @@ def drawBlocks(app, canvas):
             if block != None:
                 block.draw(app, canvas)
 
+def drawPerlin(app, canvas):
+    amplitude = 10
+    x = 0
+    while x < 50:
+        x += 0.1
+        y = app.perlin.perlin(x)
+        midX = app.width / 2
+        midY = app.height / 2
+        canvas.create_oval(x*100, 100 + y*100, x*100 + 10, 100 + y*100 + 10, fill="black")
+    
 def main():
     runTerraria()
 

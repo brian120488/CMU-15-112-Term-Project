@@ -41,7 +41,6 @@ class Player(object):
         for i in range(len(self.standingSprites)):
             self.standingSprites[i] = self.standingSprites[i].transpose(Image.FLIP_LEFT_RIGHT)
 
-
     def moveAnimation(self, direction):
         if direction != self.direction:
             self.direction = direction
