@@ -8,11 +8,14 @@ def runTerraria():
     runApp(width=width, height=height)
 
 
-# TODO: make the terrain into set instead?
+# TODO:
 # check for keyreleased for better movement
 # set random button to make a parabola jump?
 # add citations
 # proposal.txt
+# how to procedurally generate
+# update how blocks are generated and the blocks under it
+# wall and ceiling collision
 
 def appStarted(app):
     app._root.resizable(False, False)
