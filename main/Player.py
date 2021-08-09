@@ -6,6 +6,7 @@ class Player(object):
         self.width, self.height = 20, 30
         self.spriteCounter = 0
         self.direction = 1
+        self.isMoving = False
         self.speed = 10
         self.jumpSpeed = 10
 
@@ -33,8 +34,9 @@ class Player(object):
             for block in row:
                 if block != None:
                     if block.getTop(app) <= self.getBottom() <= block.getBottom(app):
-                        dif = block.getTop(app) - self.getBottom()
-                        app.scrollY -= dif # why is it not +=?
+                        app.scrollDY = 0
+                        dif = self.getBottom() - block.getTop(app)
+                        app.scrollY += dif
                         return True
         return False
 

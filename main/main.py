@@ -31,37 +31,43 @@ def appStarted(app):
 
 def keyPressed(app, event):
     if event.key == "a":
+        app.player.isMoving = True
         app.player.move(-1)
-        app.scrollX += app.player.speed
+        #app.scrollX += app.player.speed
     elif event.key == "d":
+        app.player.isMoving = True
         app.player.move(1)
         #Block.moveAllBlocks(app, 0, -1)
-        app.scrollX -= app.player.speed
+        #app.scrollX -= app.player.speed
     elif event.key == "Space" and app.player.onGround(app):
         #app.player.jump(app)
         app.scrollDY = app.player.jumpSpeed
         app.scrollY += app.scrollDY
 
+def keyReleased(app, event):
+    app.player.isMoving = False
+
 def mousePressed(app, event):
     pass
 
 def timerFired(app):
-    if app.player.onGround(app):
+    if app.player.onGround(app) and app.player.isMoving:
+        app.player.move(app.player.direction)
+        if app.player.direction == -1:
+            app.scrollX += app.player.speed 
+        else:
+            app.scrollX += app.player.speed 
         pass
     else:
         # player falling
         app.scrollDY -= app.gravity
         app.scrollY += app.scrollDY
+    #print(app.scrollY)
+
 
 def redrawAll(app, canvas):
     drawBlocks(app, canvas)
     app.player.draw(app, canvas)
-
-def drawGrid(app, canvas):
-    for i in range(0, app.width, 16):
-        canvas.create_line(i, 0, i, app.height)
-    for i in range(0, app.height, 20):
-        canvas.create_line(0, i, app.width, i)
 
 def drawBlocks(app, canvas):
     for row in range(len(app.terrain)):
