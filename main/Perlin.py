@@ -1,6 +1,6 @@
 import random
 
-# https://en.wikipedia.org/wiki/Perlin_noise and Kian's Spicy Recitatioin
+# https://en.wikipedia.org/wiki/Perlin_noise and Kian's Spicy Recitation
 class Perlin(object):
     grid = [None] * 100
     gradients = [random.random() * 2 - 1 for _ in range(len(grid))]
