@@ -1,9 +1,18 @@
 Project Description [5 pts]: I am replicating Terraria (basically 2D Minecraft).
+As of right now, you are only able to move. I will soon add terrain generation.
 Hopefully I can add features such as building, mining, AI, etc.
 
-Structural Plan [5 pts]: Player and Block class, the usual controller and draw functions, possiblly a perlin class to generate noise,
+Structural Plan [5 pts]: 
+    • Player and Block class
+    • the usual controller and draw functions
+    • a perlin class to generate noise
+    ª possibly voronoi
 
-Algorithmic Plan [5 pts]: Collision Detection and Terrain Generation (with perlin noise for terrain generation and maybe voronoi for biomes)
+Algorithmic Plan [5 pts]: 
+    • Collision Detection by checking the edges of each entity.
+    • Terrain Generation with perlin noise generation.
+    • And maybe voronoi for biome generation.
 
-Version Control Plan [5 pts]: Github: https://github.com/brian120488/Term-Project
+Version Control Plan [5 pts]: 
+Github: https://github.com/brian120488/Term-Project
 Link to image: https://ibb.co/tpwz9Wp 
