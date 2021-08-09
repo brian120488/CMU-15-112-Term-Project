@@ -1,6 +1,6 @@
 Project Description [5 pts]: I am replicating Terraria (basically 2D Minecraft).
 As of right now, you are only able to move. I will soon add terrain generation.
-Hopefully I can add features such as building, mining, AI, etc.
+Hopefully I can add features such as building, mining, AI, etc. 
 
 Structural Plan [5 pts]: 
     • Player and Block class
