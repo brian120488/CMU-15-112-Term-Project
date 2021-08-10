@@ -1,14 +1,16 @@
 from cmu_112_graphics import *
 
 class Block(object):
-    width = 16
+    width = 20
     height = 20
 
     def __init__(self, app, row, col, material):
         self.row = row
         self.col = col
         self.material = material
-        self.sprite = app.loadImage(f"sprites/{material}.png")
+        # https://hd-terraria-pics.fandom.com/wiki/Soil_Blocks
+        if self.material == "grass_block":
+            self.sprite = app.loadImage(f"sprites/{material}.png")
 
     def getXY(self, app):
         x = Block.width * self.col + Block.width / 2
@@ -18,9 +20,16 @@ class Block(object):
         return x, y
 
     def draw(self, app, canvas):
-        image = self.getCachedPhotoImage(self.sprite)
         x, y = self.getXY(app)
-        canvas.create_image(x, y, image=image)
+        if self.material == "grass_block":
+            image = self.getCachedPhotoImage(self.sprite)
+            canvas.create_image(x, y, image=image)
+        elif self.material == "dirt_block":
+            canvas.create_rectangle(self.getLeft(app), self.getTop(app) - 8, 
+                                    self.getRight(app), self.getBottom(app),
+                                    fill = "#8d654a",
+                                    width = 0)
+
 
     # https://www.cs.cmu.edu/~112/notes/notes-animations-part4.html#cachingPhotoImages
     def getCachedPhotoImage(self, image):

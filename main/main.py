@@ -20,7 +20,7 @@ def runTerraria():
 def appStarted(app):
     app._root.resizable(False, False)
     app.timerDelay = 10
-    app.rows = int(app.height / Block.height)
+    app.rows = int(app.height / Block.height) + 1
     app.cols = int(app.width / Block.width)
 
     app.player = Player(app)
@@ -33,6 +33,7 @@ def appStarted(app):
     app.midRow = int(app.rows / 2) + 2
     for col in range(len(app.terrain[0])):
         app.terrain[app.midRow][col] = Block(app, app.midRow, col, "grass_block")
+        #addColumn(app, app.terrain, col, app.midRow)
 
     app.farthestLeft = -app.width
     app.ampl = 20
@@ -111,7 +112,7 @@ def drawInventorySlots(app, canvas):
             margin + (margin + cellSize) * i, margin, 
             (margin + cellSize) * (i + 1), margin + cellSize,
             fill = "#3D4AA9",
-            width = 0.5 # no idea if this even does anything
+            width = 0.5 # no idea if this even does anything tbh
         )
         canvas.create_text(
             1 + margin + (margin + cellSize) * i, margin, 
@@ -120,12 +121,18 @@ def drawInventorySlots(app, canvas):
             anchor = "nw"
         )
 
+def drawInventory(app, canvas):
+    for item in app.player.inventory:
+        pass
+
 # adds a block in app.terrain at index i at height h
 def addColumn(app, L, i, h):
     for j in range(len(L)):
         row = L[j]
         if j == h:
             row.append(Block(app, j, i, "grass_block"))
+        elif j > h:
+            row.append(Block(app, j, i, "dirt_block"))
         else:
             row.append(None)
 
