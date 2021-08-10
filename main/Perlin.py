@@ -2,11 +2,12 @@ import random
 
 # https://en.wikipedia.org/wiki/Perlin_noise and Kian's Spicy Recitation
 class Perlin(object):
-    grid = [None] * 100
+    grid = [None] * 500
     gradients = [random.random() * 2 - 1 for _ in range(len(grid))]
 
     @staticmethod
     def perlin(x):
+        x %= len(Perlin.grid) - 1
         left = Perlin.gradients[int(x)]
         right = Perlin.gradients[int(x) + 1]
         offset = x - int(x)
