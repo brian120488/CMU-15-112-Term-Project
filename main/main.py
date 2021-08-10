@@ -11,11 +11,9 @@ def runTerraria():
 # TODO:
 # make keyreleased work
 # add citations
-# make generation procedural
 # update how blocks are generated and the blocks under it
-# make images fast
-# wall and ceiling collision
-# cite images
+# ceiling collision
+# cite images(check again)
 
 def appStarted(app):
     app._root.resizable(False, False)
@@ -30,15 +28,9 @@ def appStarted(app):
     app.gravity = 1
 
     app.terrain = [[None] * app.cols for _ in range(app.rows)]
-    midRow = int(app.rows / 2) + 2
+    app.midRow = int(app.rows / 2) + 2
     for col in range(len(app.terrain[0])):
-        app.terrain[midRow][col] = Block(app, midRow, col, "grass_block")
-
-    for i in range(500):
-        ampl = 20
-        freq = 50
-        y = int(Perlin.perlin(i / freq) * ampl)
-        addColumn(app, app.terrain, len(app.terrain[0]) - 1, midRow + y)
+        app.terrain[app.midRow][col] = Block(app, app.midRow, col, "grass_block")
 
 def keyPressed(app, event):
     if event.key == "a":
@@ -63,6 +55,13 @@ def mousePressed(app, event):
     pass
 
 def timerFired(app):
+    distanceTravelled = -app.scrollX
+    if distanceTravelled + app.width > len(app.terrain[0]) * Block.width:
+        ampl = 20
+        freq = 1000
+        y = int(Perlin.perlin(distanceTravelled / freq) * ampl)
+        addColumn(app, app.terrain, len(app.terrain[0]) - 1, app.midRow + y)
+
     if app.player.isMoving:
         app.player.moveAnimation(app.player.direction)
         if app.player.direction == -1 and app.player.nextWall(app) != -1:
