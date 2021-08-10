@@ -33,9 +33,8 @@ def appStarted(app):
     midRow = int(app.rows / 2) + 2
     for col in range(len(app.terrain[0])):
         app.terrain[midRow][col] = Block(app, midRow, col, "grass_block")
-        #addColumn(app.terrain, col, 10) # laggy
 
-    for i in range(50):
+    for i in range(500):
         ampl = 20
         freq = 50
         y = int(Perlin.perlin(i / freq) * ampl)

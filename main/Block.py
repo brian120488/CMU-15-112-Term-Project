@@ -18,8 +18,16 @@ class Block(object):
         return x, y
 
     def draw(self, app, canvas):
+        image = self.getCachedPhotoImage(self.sprite)
         x, y = self.getXY(app)
-        canvas.create_image(x, y, image=ImageTk.PhotoImage(self.sprite))
+        canvas.create_image(x, y, image=image)
+
+    # https://www.cs.cmu.edu/~112/notes/notes-animations-part4.html#cachingPhotoImages
+    def getCachedPhotoImage(self, image):
+        # stores a cached version of the PhotoImage in the PIL/Pillow image
+        if ('cachedPhotoImage' not in image.__dict__):
+            image.cachedPhotoImage = ImageTk.PhotoImage(image)
+        return image.cachedPhotoImage
 
     def getTop(self, app):
         _, y = self.getXY(app)

@@ -34,6 +34,7 @@ class Player(object):
     def draw(self, app, canvas):
         canvas.create_image(self.x, self.y, image=ImageTk.PhotoImage(self.currSprite))
 
+    
     def rotateAllAnimations(self):
         for i in range(len(self.walkingSprites)):
             self.walkingSprites[i] = self.walkingSprites[i].transpose(Image.FLIP_LEFT_RIGHT)
@@ -76,7 +77,7 @@ class Player(object):
                         return True
         return False
 
-    # return which wall it is next to (-1 = left, 1 = right, and 0 = no walls)
+    # returns which wall the player is next to (-1 = left, 1 = right, and 0 = no walls)
     def nextWall(self, app):
         for row in app.terrain:
             for block in row:
