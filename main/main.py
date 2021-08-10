@@ -11,7 +11,6 @@ def runTerraria():
 # TODO:
 # make keyreleased work
 # add citations
-# update how blocks are generated and the blocks under it
 # ceiling collision
 # cite images(check again)
 # add keyboard shortcuts (like button to see the perlin graph)
@@ -35,7 +34,7 @@ def appStarted(app):
         appendColumn(app, app.terrain, app.midRow)
 
     app.farthestLeft = -app.width
-    app.ampl = 20
+    app.ampl = 30
     app.freq = 1000
 
 def keyPressed(app, event):
@@ -58,12 +57,23 @@ def keyReleased(app, event):
     pass
 
 def mousePressed(app, event):
-    pass
+    # scrollXY is negative
+    mouseX = event.x - app.scrollX
+    mouseY = event.y - app.scrollY
+    mouseRow = int(mouseY / Block.height)
+    mouseCol = int(mouseX / Block.width)
+    try:
+        block = app.terrain[mouseRow][mouseCol]
+        if block != None:
+            app.player.inventory app.terrain[mouseRow][mouseCol] 
+        app.terrain[mouseRow][mouseCol] = None
+    except:
+        pass
 
 def timerFired(app):
     distanceTravelled = -app.scrollX
     if distanceTravelled + app.width > len(app.terrain[0]) * Block.width:
-        y = int(Perlin.perlin(distanceTravelled / app.freq) * app.ampl)
+        y = int(Perlin.perlin(distanceTravelled / app.freq) * app.ampl - 2)
         appendColumn(app, app.terrain, app.midRow + y)
 
     if app.player.isMoving:
@@ -120,6 +130,7 @@ def drawInventorySlots(app, canvas):
             anchor = "nw"
         )
 
+# TODO
 def drawInventory(app, canvas):
     for item in app.player.inventory:
         pass
