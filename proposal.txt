@@ -5,6 +5,9 @@ Hopefully I can add features such as building, mining, AI, etc.
 If the terrain in front of you is new (not discovered), you will be able to see 
 the generating blocks.
 
+World is infinite compared to Terraria because procedural generation instead of 
+preset generation; however, cannot generate to the left.
+
 Structural Plan [5 pts]: 
     • Player and Block class
     • The usual controller and draw functions

@@ -14,6 +14,8 @@ def runTerraria():
 # update how blocks are generated and the blocks under it
 # ceiling collision
 # cite images(check again)
+# add keyboard shortcuts (like button to see the perlin graph)
+# cannot generate to the left because blocks based on row, col
 
 def appStarted(app):
     app._root.resizable(False, False)
@@ -31,6 +33,10 @@ def appStarted(app):
     app.midRow = int(app.rows / 2) + 2
     for col in range(len(app.terrain[0])):
         app.terrain[app.midRow][col] = Block(app, app.midRow, col, "grass_block")
+
+    app.farthestLeft = -app.width
+    app.ampl = 20
+    app.freq = 1000
 
 def keyPressed(app, event):
     if event.key == "a":
@@ -57,9 +63,7 @@ def mousePressed(app, event):
 def timerFired(app):
     distanceTravelled = -app.scrollX
     if distanceTravelled + app.width > len(app.terrain[0]) * Block.width:
-        ampl = 20
-        freq = 1000
-        y = int(Perlin.perlin(distanceTravelled / freq) * ampl)
+        y = int(Perlin.perlin(distanceTravelled / app.freq) * app.ampl)
         addColumn(app, app.terrain, len(app.terrain[0]) - 1, app.midRow + y)
 
     if app.player.isMoving:
@@ -78,14 +82,6 @@ def timerFired(app):
 
     if app.player.onGround(app) and not app.player.isMoving:
         app.player.standAnimation(app.player.direction)
-
-    # procedurally generate to the right
-    # if -app.scrollX + app.width / 2 > len(app.terrain) * Block.width:
-    #     app.distanceTravelled += 0.1
-    #     y = Perlin.perlin(app.distanceTravelled)
-    #     addColumn(app, app.terrain, len(app.terrain) - 1, y * len(app.terrain))
-    #     print("hi")
-
 
 def redrawAll(app, canvas):
     drawBlocks(app, canvas)
@@ -108,16 +104,12 @@ def drawPerlin(app, canvas):
     
 # adds a block in app.terrain at index i at height h
 def addColumn(app, L, i, h):
-    # for j in range(h, len(L)):
-    #     row = L[j]
-    #     row.insert(i, Block(app, j, i, "grass_block"))
     for j in range(len(L)):
         row = L[j]
         if j == h:
             row.append(Block(app, j, i, "grass_block"))
         else:
             row.append(None)
-
 
 def main():
     runTerraria()
