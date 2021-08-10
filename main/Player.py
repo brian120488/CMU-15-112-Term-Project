@@ -34,7 +34,6 @@ class Player(object):
     def draw(self, app, canvas):
         canvas.create_image(self.x, self.y, image=ImageTk.PhotoImage(self.currSprite))
 
-    
     def rotateAllAnimations(self):
         for i in range(len(self.walkingSprites)):
             self.walkingSprites[i] = self.walkingSprites[i].transpose(Image.FLIP_LEFT_RIGHT)
