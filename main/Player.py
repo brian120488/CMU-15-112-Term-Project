@@ -1,4 +1,5 @@
 from cmu_112_graphics import *
+from Block import Block
 
 class Player(object):
     def __init__(self, app):
@@ -10,14 +11,14 @@ class Player(object):
         self.speed = 10
         self.jumpSpeed = 10
 
-        # initializes sprites
+        # initializes sprites from https://www.deviantart.com/omega7321/art/Terraria-Default-Player-sprite-sheet-637899627
         path = "sprites/player_sprites.png"
         spritestrip = app.loadImage(path)
         self.walkingSprites = []
         for i in range(6, 19):
             sprite = spritestrip.crop((self.width * i, 0, self.width * (i + 1), self.height))
             self.walkingSprites.append(sprite.transpose(Image.FLIP_LEFT_RIGHT))
-
+            
         self.fallingSprites = []
         for i in range(5, 6):
             sprite = spritestrip.crop((self.width * i, 0, self.width * (i + 1), self.height))
@@ -67,12 +68,41 @@ class Player(object):
             for block in row:
                 if block != None:
                     if (block.getTop(app) <= self.getBottom() <= block.getBottom(app)
-                        and block.getLeft(app) <= self.x <= block.getRight(app)):
+                        and block.getLeft(app) <= self.x <= block.getRight(app)
+                        and app.scrollDY <= 0):
                         app.scrollDY = 0
                         dif = self.getBottom() - block.getTop(app)
                         app.scrollY += dif
                         return True
         return False
 
+    # return which wall it is next to (-1 = left, 1 = right, and 0 = no walls)
+    def nextWall(self, app):
+        for row in app.terrain:
+            for block in row:
+                if block != None:
+                    _, blockY = block.getXY(app)
+                    blockLeft = block.getLeft(app)
+                    blockRight = block.getRight(app)
+                    print(blockLeft <= self.getRight() <= blockRight, blockLeft <= self.getLeft() <= blockRight, self.getTop() - Block.height / 2 <= blockY, blockY <= self.getBottom() + Block.height / 2)
+                    if ((blockLeft <= self.getRight() <= blockRight
+                        or blockLeft <= self.getLeft() <= blockRight)
+                        and self.getTop() < blockY
+                        and blockY < self.getBottom()):
+                        # dif = self.getRight() - block.getXY[0]
+                        # app.scrollY += dif
+                        return int(blockLeft <= self.getRight() <= blockRight) * 2 - 1
+        return 0
+
+    def getTop(self):
+        return int(self.y - self.height / 2)
+
     def getBottom(self):
         return int(self.y + self.height / 2)
+
+    def getLeft(self):
+        return int(self.x - self.width / 2)
+
+    def getRight(self):
+        return int(self.x + self.width / 2)
+

@@ -10,11 +10,10 @@ def runTerraria():
 
 # TODO:
 # make keyreleased work
-# set random button to make a parabola jump?
 # add citations
-# proposal.txt
-# how to procedurally generate
+# make generation procedural
 # update how blocks are generated and the blocks under it
+# make images fast
 # wall and ceiling collision
 # cite images
 
@@ -38,7 +37,7 @@ def appStarted(app):
 
     for i in range(50):
         ampl = 20
-        freq = 40
+        freq = 50
         y = int(Perlin.perlin(i / freq) * ampl)
         addColumn(app, app.terrain, len(app.terrain[0]) - 1, midRow + y)
 
@@ -67,10 +66,12 @@ def mousePressed(app, event):
 def timerFired(app):
     if app.player.isMoving:
         app.player.moveAnimation(app.player.direction)
-        if app.player.direction == -1:
+        if app.player.direction == -1 and app.player.nextWall(app) != -1:
             app.scrollX += app.player.speed 
-        elif app.player.direction == 1:
+        elif app.player.direction == 1 and app.player.nextWall(app) != 1:
             app.scrollX -= app.player.speed 
+        else:
+            app.player.standAnimation(app.player.direction)
 
     if not app.player.onGround(app):
         app.player.fallAnimation(app.player.direction)
