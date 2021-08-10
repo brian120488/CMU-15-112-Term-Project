@@ -29,11 +29,10 @@ def appStarted(app):
     app.scrollDY = 0
     app.gravity = 1
 
-    app.terrain = [[None] * app.cols for _ in range(app.rows)]
+    app.terrain = [[None] for _ in range(app.rows)]
     app.midRow = int(app.rows / 2) + 2
-    for col in range(len(app.terrain[0])):
-        app.terrain[app.midRow][col] = Block(app, app.midRow, col, "grass_block")
-        #addColumn(app, app.terrain, col, app.midRow)
+    for col in range(app.cols):
+        addColumn(app, app.terrain, col, app.midRow)
 
     app.farthestLeft = -app.width
     app.ampl = 20
