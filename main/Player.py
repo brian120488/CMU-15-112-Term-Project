@@ -84,13 +84,9 @@ class Player(object):
                     _, blockY = block.getXY(app)
                     blockLeft = block.getLeft(app)
                     blockRight = block.getRight(app)
-                    print(blockLeft <= self.getRight() <= blockRight, blockLeft <= self.getLeft() <= blockRight, self.getTop() - Block.height / 2 <= blockY, blockY <= self.getBottom() + Block.height / 2)
                     if ((blockLeft <= self.getRight() <= blockRight
                         or blockLeft <= self.getLeft() <= blockRight)
-                        and self.getTop() < blockY
-                        and blockY < self.getBottom()):
-                        # dif = self.getRight() - block.getXY[0]
-                        # app.scrollY += dif
+                        and self.getTop() < blockY < self.getBottom()):
                         return int(blockLeft <= self.getRight() <= blockRight) * 2 - 1
         return 0
 
