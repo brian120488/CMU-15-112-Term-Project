@@ -10,6 +10,7 @@ class Player(object):
         self.isMoving = False
         self.speed = 10
         self.jumpSpeed = 10
+        self.inventory = [None] * 10
 
         # initializes sprites from https://www.deviantart.com/omega7321/art/Terraria-Default-Player-sprite-sheet-637899627
         path = "sprites/player_sprites.png"

@@ -87,6 +87,7 @@ def redrawAll(app, canvas):
     drawBlocks(app, canvas)
     app.player.draw(app, canvas)
     drawPerlin(app, canvas)
+    drawInventorySlots(app, canvas)
 
 def drawBlocks(app, canvas):
     for row in range(len(app.terrain)):
@@ -102,6 +103,23 @@ def drawPerlin(app, canvas):
         y = Perlin.perlin(x)
         canvas.create_oval(x*100, 100 + y*100, x*100 + 10, 100 + y*100 + 10, fill="black")
     
+def drawInventorySlots(app, canvas):
+    margin = 5
+    cellSize = 40
+    for i in range(10):
+        canvas.create_rectangle(
+            margin + (margin + cellSize) * i, margin, 
+            (margin + cellSize) * (i + 1), margin + cellSize,
+            fill = "#3D4AA9",
+            width = 0.5 # no idea if this even does anything
+        )
+        canvas.create_text(
+            1 + margin + (margin + cellSize) * i, margin, 
+            text = str(i+1), 
+            fill = "white",
+            anchor = "nw"
+        )
+
 # adds a block in app.terrain at index i at height h
 def addColumn(app, L, i, h):
     for j in range(len(L)):
