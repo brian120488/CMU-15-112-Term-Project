@@ -32,7 +32,7 @@ def appStarted(app):
     app.terrain = [[None] for _ in range(app.rows)]
     app.midRow = int(app.rows / 2) + 2
     for col in range(app.cols):
-        addColumn(app, app.terrain, col, app.midRow)
+        appendColumn(app, app.terrain, app.midRow)
 
     app.farthestLeft = -app.width
     app.ampl = 20
@@ -64,7 +64,7 @@ def timerFired(app):
     distanceTravelled = -app.scrollX
     if distanceTravelled + app.width > len(app.terrain[0]) * Block.width:
         y = int(Perlin.perlin(distanceTravelled / app.freq) * app.ampl)
-        addColumn(app, app.terrain, len(app.terrain[0]) - 1, app.midRow + y)
+        appendColumn(app, app.terrain, app.midRow + y)
 
     if app.player.isMoving:
         app.player.moveAnimation(app.player.direction)
@@ -124,14 +124,14 @@ def drawInventory(app, canvas):
     for item in app.player.inventory:
         pass
 
-# adds a block in app.terrain at index i at height h
-def addColumn(app, L, i, h):
+# appends a column of blocks in app.terrain at height h
+def appendColumn(app, L, h):
     for j in range(len(L)):
         row = L[j]
         if j == h:
-            row.append(Block(app, j, i, "grass_block"))
+            row.append(Block(app, j, len(L[0]) - 1, "grass_block"))
         elif j > h:
-            row.append(Block(app, j, i, "dirt_block"))
+            row.append(Block(app, j, len(L[0]) - 1, "dirt_block"))
         else:
             row.append(None)
 
