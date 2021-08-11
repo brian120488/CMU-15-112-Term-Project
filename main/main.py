@@ -136,7 +136,7 @@ def drawInventory(app, canvas):
         pass
 
 # appends a column of blocks in app.terrain at height h
-# TODO: each iteratioon has a chance too have a tree
+# TODO: each iteration has a chance to have a tree
 def appendColumn(app, L, h):
     for j in range(len(L)):
         row = L[j]
