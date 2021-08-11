@@ -10,7 +10,8 @@ class Player(object):
         self.isMoving = False
         self.speed = 10
         self.jumpSpeed = 10
-        self.inventory = [None] * 10
+        self.inventory = dict()
+        self.inventoryImages = dict()
 
         # initializes sprites from https://www.deviantart.com/omega7321/art/Terraria-Default-Player-sprite-sheet-637899627
         path = "sprites/player_sprites.png"
@@ -64,6 +65,7 @@ class Player(object):
         self.spriteCounter = (self.spriteCounter + 1) % len(self.standingSprites)
         self.currSprite = self.standingSprites[self.spriteCounter]
 
+    # return True if player is on the ground
     def onGround(self, app):
         for row in app.terrain:
             for block in row:
@@ -88,7 +90,10 @@ class Player(object):
                     if ((blockLeft <= self.getRight() <= blockRight
                         or blockLeft <= self.getLeft() <= blockRight)
                         and self.getTop() < blockY < self.getBottom()):
-                        return int(blockLeft <= self.getRight() <= blockRight) * 2 - 1
+
+                        wall = int(blockLeft <= self.getRight() <= blockRight) * 2 - 1
+                        app.player.isMoving = False
+                        return wall
         return 0
 
     def getTop(self):

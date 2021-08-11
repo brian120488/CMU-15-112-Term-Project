@@ -13,8 +13,8 @@ def runTerraria():
 # add citations
 # ceiling collision
 # cite images(check again)
-# add keyboard shortcuts (like button to see the perlin graph)
 # cannot generate to the left because blocks based on row, col
+# moving in tight spaces is buggy
 
 def appStarted(app):
     app._root.resizable(False, False)
@@ -33,9 +33,9 @@ def appStarted(app):
     for col in range(app.cols):
         appendColumn(app, app.terrain, app.midRow)
 
-    app.farthestLeft = -app.width
     app.ampl = 30
     app.freq = 1000
+    app.showPerlin = False
 
 def keyPressed(app, event):
     if event.key == "a":
@@ -50,24 +50,25 @@ def keyPressed(app, event):
         #app.player.jump(app)
         app.scrollDY = app.player.jumpSpeed
         app.scrollY += app.scrollDY
-
-# runs even when key not released?
-def keyReleased(app, event):
-    #app.player.isMoving = False
-    pass
+    elif event.key == "p":
+        app.showPerlin = not app.showPerlin
 
 def mousePressed(app, event):
-    # scrollXY is negative
     mouseX = event.x - app.scrollX
     mouseY = event.y - app.scrollY
     mouseRow = int(mouseY / Block.height)
     mouseCol = int(mouseX / Block.width)
-    try:
-        block = app.terrain[mouseRow][mouseCol]
-        if block != None:
-            app.player.inventory app.terrain[mouseRow][mouseCol] 
+    block = app.terrain[mouseRow][mouseCol]
+
+    # when the player mines a block
+    if block != None:
         app.terrain[mouseRow][mouseCol] = None
-    except:
+        app.player.inventory[block.material] = app.player.inventory.get(block.material, 0) + 1
+        if block.material == "grass_block":
+            image = app.loadImage(f"sprites/grass_block.png")
+            app.player.inventoryImages["grass_block"] = image
+    else:
+        # place block
         pass
 
 def timerFired(app):
@@ -96,8 +97,10 @@ def timerFired(app):
 def redrawAll(app, canvas):
     drawBlocks(app, canvas)
     app.player.draw(app, canvas)
-    drawPerlin(app, canvas)
+    if app.showPerlin:
+        drawPerlin(app, canvas)
     drawInventorySlots(app, canvas)
+    drawInventory(app, canvas)
 
 def drawBlocks(app, canvas):
     for row in range(len(app.terrain)):
@@ -130,10 +133,27 @@ def drawInventorySlots(app, canvas):
             anchor = "nw"
         )
 
-# TODO
 def drawInventory(app, canvas):
-    for item in app.player.inventory:
-        pass
+    i = 0
+    margin = 5
+    cellSize = 40
+    for material in app.player.inventory:
+        x = (margin + (margin + cellSize) * (2 * i + 1)) / 2
+        y = margin + cellSize / 2
+        if material == "grass_block" and material in app.player.inventoryImages:
+            image = app.player.inventoryImages[material]
+            canvas.create_image(x, y, image=ImageTk.PhotoImage(image))
+        elif material == "dirt_block":
+            canvas.create_rectangle(x - 10, y - 10, x + 10, y + 10, fill="#8d654a", width=0)
+
+        canvas.create_text(
+            1 + margin + (margin + cellSize) * i, margin + cellSize, 
+            text = str(app.player.inventory[material]), 
+            fill = "white",
+            anchor = "sw"
+        )
+
+        i += 1
 
 # appends a column of blocks in app.terrain at height h
 # TODO: each iteration has a chance to have a tree
