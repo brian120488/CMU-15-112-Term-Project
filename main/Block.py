@@ -8,8 +8,9 @@ class Block(object):
         self.row = row
         self.col = col
         self.material = material
-        # https://hd-terraria-pics.fandom.com/wiki/Soil_Blocks
-        if self.material == "grass_block":
+        # https://hd-terraria-pics.fandom.com/wiki/Soil_Blocks grass block
+        # https://www.pikpng.com/pngvi/iTJRwo_terraria-tree-terraria-tree-logo-png-clipart/ tree
+        if self.material != "dirt_block":
             self.sprite = app.loadImage(f"sprites/{material}.png")
 
     def getXY(self, app):
@@ -29,6 +30,9 @@ class Block(object):
                                     self.getRight(app), self.getBottom(app),
                                     fill = "#8d654a",
                                     width = 0)
+        elif self.material == "tree":
+            image = self.getCachedPhotoImage(self.sprite)
+            canvas.create_image(x, y - 22, image=image)
 
 
     # https://www.cs.cmu.edu/~112/notes/notes-animations-part4.html#cachingPhotoImages

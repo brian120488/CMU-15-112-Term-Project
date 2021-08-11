@@ -2,11 +2,11 @@ from cmu_112_graphics import *
 from Player import Player
 from Block import Block
 from Perlin import Perlin
+import random
 
 def runTerraria():
     width, height = 800, 400
     runApp(width=width, height=height)
-
 
 # TODO:
 # make keyreleased work
@@ -156,11 +156,13 @@ def drawInventory(app, canvas):
         i += 1
 
 # appends a column of blocks in app.terrain at height h
-# TODO: each iteration has a chance to have a tree
+# each iteration has a chance to spawn a tree
 def appendColumn(app, L, h):
     for j in range(len(L)):
         row = L[j]
-        if j == h:
+        if j == h - 1 and random.random() < 0.1:
+            row.append(Block(app, j, len(L[0]) - 1, "tree"))
+        elif j == h:
             row.append(Block(app, j, len(L[0]) - 1, "grass_block"))
         elif j > h:
             row.append(Block(app, j, len(L[0]) - 1, "dirt_block"))

@@ -69,7 +69,7 @@ class Player(object):
     def onGround(self, app):
         for row in app.terrain:
             for block in row:
-                if block != None:
+                if block != None and block.material != "tree":
                     if (block.getTop(app) <= self.getBottom() <= block.getBottom(app)
                         and block.getLeft(app) <= self.x <= block.getRight(app)
                         and app.scrollDY <= 0):
@@ -83,7 +83,7 @@ class Player(object):
     def nextWall(self, app):
         for row in app.terrain:
             for block in row:
-                if block != None:
+                if block != None and block.material != "tree":
                     _, blockY = block.getXY(app)
                     blockLeft = block.getLeft(app)
                     blockRight = block.getRight(app)
