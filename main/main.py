@@ -9,12 +9,11 @@ def runTerraria():
     runApp(width=width, height=height)
 
 # TODO:
-# make keyreleased work
-# add citations
-# ceiling collision
 # cite images(check again)
 # cannot generate to the left because blocks based on row, col
 # moving in tight spaces is buggy
+# add tree drops 
+# add placing
 
 def appStarted(app):
     app._root.resizable(False, False)
