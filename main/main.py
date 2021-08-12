@@ -12,8 +12,7 @@ def runTerraria():
 # cite images(check again)
 # cannot generate to the left because blocks based on row, col
 # moving in tight spaces is buggy
-# add tree drops 
-# add placing
+# add placing and pressing numbers to change block
 
 def appStarted(app):
     app._root.resizable(False, False)
@@ -64,8 +63,13 @@ def mousePressed(app, event):
         app.terrain[mouseRow][mouseCol] = None
         app.player.inventory[block.material] = app.player.inventory.get(block.material, 0) + 1
         if block.material == "grass_block":
-            image = app.loadImage(f"sprites/grass_block.png")
+            image = app.loadImage("sprites/grass_block.png")
             app.player.inventoryImages["grass_block"] = image
+        elif block.material == "tree":
+            image = app.loadImage("sprites/wood.png")
+            app.player.inventoryImages["wood"] = image
+            print(app.player.inventoryImages)
+            pass # TODO
     else:
         # place block
         pass
@@ -144,6 +148,9 @@ def drawInventory(app, canvas):
             canvas.create_image(x, y, image=ImageTk.PhotoImage(image))
         elif material == "dirt_block":
             canvas.create_rectangle(x - 10, y - 10, x + 10, y + 10, fill="#8d654a", width=0)
+        elif material == "tree" and "wood" in app.player.inventoryImages:
+            image = app.player.inventoryImages["wood"]
+            canvas.create_image(x, y, image=ImageTk.PhotoImage(image))
 
         canvas.create_text(
             1 + margin + (margin + cellSize) * i, margin + cellSize, 

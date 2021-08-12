@@ -10,6 +10,7 @@ class Block(object):
         self.material = material
         # https://hd-terraria-pics.fandom.com/wiki/Soil_Blocks grass block
         # https://www.pikpng.com/pngvi/iTJRwo_terraria-tree-terraria-tree-logo-png-clipart/ tree
+        # https://terraria.fandom.com/wiki/Woods wood and wood block
         if self.material != "dirt_block":
             self.sprite = app.loadImage(f"sprites/{material}.png")
 
