@@ -9,7 +9,6 @@ def runTerraria():
     runApp(width=width, height=height)
 
 # TODO:
-# cite images(check again)
 # cannot generate to the left because blocks based on row, col
 # moving in tight spaces is buggy
 # add placing and pressing numbers to change block
@@ -70,8 +69,6 @@ def mousePressed(app, event):
         elif block.material == "tree":
             image = app.loadImage("sprites/wood.png")
             app.player.inventoryImages["wood"] = image
-            print(app.player.inventoryImages)
-            pass # TODO
     else:
         # place block
         pass
