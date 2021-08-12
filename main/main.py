@@ -31,7 +31,7 @@ def appStarted(app):
     for col in range(app.cols):
         appendColumn(app, app.terrain, app.midRow)
 
-    app.ampl = 30
+    app.ampl = 25
     app.freq = 1000
     app.showPerlin = False
 
@@ -50,6 +50,8 @@ def keyPressed(app, event):
         app.scrollY += app.scrollDY
     elif event.key == "p":
         app.showPerlin = not app.showPerlin
+    elif event.key == "r":
+        appStarted(app)
 
 def mousePressed(app, event):
     mouseX = event.x - app.scrollX
