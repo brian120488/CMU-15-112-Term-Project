@@ -9,6 +9,7 @@ def runTerraria():
     runApp(width=width, height=height)
 
 # TODO:
+# make sure citations are enough
 # cannot generate to the left because blocks based on row, col
 # moving in tight spaces is buggy
 # add placing and pressing numbers to change block
@@ -51,6 +52,11 @@ def keyPressed(app, event):
         app.showPerlin = not app.showPerlin
     elif event.key == "r":
         appStarted(app)
+    elif event.key in {str(i) for i in range(10)}:
+        app.player.currSelection = int(event.key) - 1
+        if event.key == "0":
+            app.player.currSelection = 9
+
 
 def mousePressed(app, event):
     mouseX = event.x - app.scrollX
@@ -64,10 +70,10 @@ def mousePressed(app, event):
         app.terrain[mouseRow][mouseCol] = None
         app.player.inventory[block.material] = app.player.inventory.get(block.material, 0) + 1
         if block.material == "grass_block":
-            image = app.loadImage("sprites/grass_block.png")
+            image = app.loadImage("sprites/grass_block.png")  # https://hd-terraria-pics.fandom.com/wiki/Soil_Blocks
             app.player.inventoryImages["grass_block"] = image
         elif block.material == "tree":
-            image = app.loadImage("sprites/wood.png")
+            image = app.loadImage("sprites/wood.png")  # https://terraria.fandom.com/wiki/Woods
             app.player.inventoryImages["wood"] = image
     else:
         # place block
@@ -103,6 +109,7 @@ def redrawAll(app, canvas):
         drawPerlin(app, canvas)
     drawInventorySlots(app, canvas)
     drawInventory(app, canvas)
+    drawCurrSelection(app, canvas)
 
 def drawBlocks(app, canvas):
     for row in range(len(app.terrain)):
@@ -144,12 +151,12 @@ def drawInventory(app, canvas):
         y = margin + cellSize / 2
         if material == "grass_block" and material in app.player.inventoryImages:
             image = app.player.inventoryImages[material]
-            canvas.create_image(x, y, image=ImageTk.PhotoImage(image))
+            canvas.create_image(x, y, image=ImageTk.PhotoImage(image)) # https://hd-terraria-pics.fandom.com/wiki/Soil_Blocks
         elif material == "dirt_block":
             canvas.create_rectangle(x - 10, y - 10, x + 10, y + 10, fill="#8d654a", width=0)
         elif material == "tree" and "wood" in app.player.inventoryImages:
             image = app.player.inventoryImages["wood"]
-            canvas.create_image(x, y, image=ImageTk.PhotoImage(image))
+            canvas.create_image(x, y, image=ImageTk.PhotoImage(image))  # https://terraria.fandom.com/wiki/Woods
 
         canvas.create_text(
             1 + margin + (margin + cellSize) * i, margin + cellSize, 
@@ -159,6 +166,37 @@ def drawInventory(app, canvas):
         )
 
         i += 1
+
+def drawCurrSelection(app, canvas):
+    margin = 5
+    cellSize = 40
+    i = app.player.currSelection
+    fill =  "#ffffff"
+    # canvas.create_rectangle(
+    #     margin + (margin + cellSize) * i, margin, 
+    #     (margin + cellSize) * (i + 1), margin + cellSize,
+    #     fill = "#0e1d8c",
+    # )
+    canvas.create_line(
+        margin + (margin + cellSize) * i, margin,
+        (margin + cellSize) * (i + 1), margin,
+        fill=fill
+    )
+    canvas.create_line(
+        (margin + cellSize) * (i + 1), margin,
+        (margin + cellSize) * (i + 1), margin + cellSize,
+        fill=fill
+    )
+    canvas.create_line(
+        (margin + cellSize) * (i + 1), margin + cellSize,
+        margin + (margin + cellSize) * i, margin + cellSize,
+        fill=fill
+    )
+    canvas.create_line(
+        margin + (margin + cellSize) * i, margin + cellSize,
+        margin + (margin + cellSize) * i, margin,
+        fill=fill
+    )
 
 # appends a column of blocks in app.terrain at height h
 # each iteration has a chance to spawn a tree

@@ -12,6 +12,7 @@ class Player(object):
         self.jumpSpeed = 10
         self.inventory = dict()
         self.inventoryImages = dict()
+        self.currSelection = 0
 
         # initializes sprites from https://www.deviantart.com/omega7321/art/Terraria-Default-Player-sprite-sheet-637899627
         path = "sprites/player_sprites.png"
