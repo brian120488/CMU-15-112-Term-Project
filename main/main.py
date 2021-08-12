@@ -17,7 +17,7 @@ def runTerraria():
 def appStarted(app):
     app._root.resizable(False, False)
     app.timerDelay = 10
-    app.rows = int(app.height / Block.height) + 1
+    app.rows = int(app.height / Block.height) + 3
     app.cols = int(app.width / Block.width)
 
     app.player = Player(app)
@@ -79,7 +79,7 @@ def mousePressed(app, event):
 def timerFired(app):
     distanceTravelled = -app.scrollX
     if distanceTravelled + app.width > len(app.terrain[0]) * Block.width:
-        y = int(Perlin.perlin(distanceTravelled / app.freq) * app.ampl - 2)
+        y = int(Perlin.perlin(distanceTravelled / app.freq) * app.ampl - 1)
         appendColumn(app, app.terrain, app.midRow + y)
 
     if app.player.isMoving:
