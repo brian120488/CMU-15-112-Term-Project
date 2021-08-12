@@ -10,7 +10,8 @@ class Player(object):
         self.isMoving = False
         self.speed = 10
         self.jumpSpeed = 10
-        self.inventory = dict()
+        self.inventory = [None] * 10
+        self.inventoryCount = [0] * 10
         self.inventoryImages = dict()
         self.currSelection = 0
 

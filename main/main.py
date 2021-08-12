@@ -68,16 +68,28 @@ def mousePressed(app, event):
     # when the player mines a block
     if block != None:
         app.terrain[mouseRow][mouseCol] = None
-        app.player.inventory[block.material] = app.player.inventory.get(block.material, 0) + 1
+
+        if block.material not in app.player.inventory:
+            nextNone = app.player.inventory.index(None)
+            app.player.inventory[nextNone] = block.material
+        materialIndex = app.player.inventory.index(block.material)
+        app.player.inventoryCount[materialIndex] += 1
         if block.material == "grass_block":
             image = app.loadImage("sprites/grass_block.png")  # https://hd-terraria-pics.fandom.com/wiki/Soil_Blocks
             app.player.inventoryImages["grass_block"] = image
         elif block.material == "tree":
             image = app.loadImage("sprites/wood.png")  # https://terraria.fandom.com/wiki/Woods
             app.player.inventoryImages["wood"] = image
+    # place block
     else:
-        # place block
-        pass
+        i = app.player.currSelection
+        currMaterial = app.player.inventory[i]
+        if currMaterial != None:
+            placedBlock = Block(app, mouseRow, mouseCol, currMaterial)
+            app.player.inventoryCount[i] -= 1
+            app.terrain[mouseRow][mouseCol] = placedBlock
+        if app.player.inventoryCount[i] == 0:
+            app.player.inventory[i] = None
 
 def timerFired(app):
     distanceTravelled = -app.scrollX
@@ -146,7 +158,10 @@ def drawInventory(app, canvas):
     i = 0
     margin = 5
     cellSize = 40
-    for material in app.player.inventory:
+    for i in range(len(app.player.inventory)):
+        material = app.player.inventory[i]
+        if material == None:
+            continue
         x = (margin + (margin + cellSize) * (2 * i + 1)) / 2
         y = margin + cellSize / 2
         if material == "grass_block" and material in app.player.inventoryImages:
@@ -160,7 +175,7 @@ def drawInventory(app, canvas):
 
         canvas.create_text(
             1 + margin + (margin + cellSize) * i, margin + cellSize, 
-            text = str(app.player.inventory[material]), 
+            text = str(app.player.inventoryCount[i]), 
             fill = "white",
             anchor = "sw"
         )
@@ -172,11 +187,6 @@ def drawCurrSelection(app, canvas):
     cellSize = 40
     i = app.player.currSelection
     fill =  "#ffffff"
-    # canvas.create_rectangle(
-    #     margin + (margin + cellSize) * i, margin, 
-    #     (margin + cellSize) * (i + 1), margin + cellSize,
-    #     fill = "#0e1d8c",
-    # )
     canvas.create_line(
         margin + (margin + cellSize) * i, margin,
         (margin + cellSize) * (i + 1), margin,

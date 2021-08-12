@@ -23,10 +23,7 @@ class Block(object):
 
     def draw(self, app, canvas):
         x, y = self.getXY(app)
-        if self.material == "grass_block":
-            image = self.getCachedPhotoImage(self.sprite)
-            canvas.create_image(x, y, image=image)
-        elif self.material == "dirt_block":
+        if self.material == "dirt_block":
             canvas.create_rectangle(self.getLeft(app), self.getTop(app) - 8, 
                                     self.getRight(app), self.getBottom(app),
                                     fill = "#8d654a",
@@ -34,6 +31,10 @@ class Block(object):
         elif self.material == "tree":
             image = self.getCachedPhotoImage(self.sprite)
             canvas.create_image(x, y - 22, image=image)
+        else:
+            image = self.getCachedPhotoImage(self.sprite)
+            canvas.create_image(x, y, image=image)
+
 
 
     # https://www.cs.cmu.edu/~112/notes/notes-animations-part4.html#cachingPhotoImages
