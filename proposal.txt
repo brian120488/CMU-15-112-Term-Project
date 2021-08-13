@@ -25,3 +25,6 @@ World is infinite compared to Terraria because procedural generation instead of
 preset generation; however, cannot generate to the left.
 
 Added other blocks. Able to mine but not place just yet.
+
+TP3 Update:
+Placing Blocks!
