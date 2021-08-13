@@ -12,12 +12,14 @@ def runTerraria():
 # make sure citations are enough
 # cannot generate to the left because blocks based on row, col
 # moving in tight spaces is buggy
-# add placing and pressing numbers to change block
+# make placing wood turn into wood planks i dont want to place a tree
+# please help lag
+
 
 def appStarted(app):
     app._root.resizable(False, False)
     app.timerDelay = 10
-    app.rows = int(app.height / Block.height) + 3
+    app.rows = int(app.height / Block.height) + 8
     app.cols = int(app.width / Block.width)
 
     app.player = Player(app)
@@ -27,13 +29,17 @@ def appStarted(app):
     app.gravity = 1
 
     app.terrain = [[None] for _ in range(app.rows)]
-    app.midRow = int(app.rows / 2) + 2
+    app.midRow = int(app.rows / 2) - 1
     for col in range(app.cols):
         appendColumn(app, app.terrain, app.midRow)
 
     app.ampl = 25
     app.freq = 1000
     app.showPerlin = False
+
+    # https://gamelust.com/news/terraria-otherworld-cancelled-more-updates-coming-for-terraria/
+    path = "sprites/sky.jpeg"
+    app.skyImage = app.loadImage(path)
 
 def keyPressed(app, event):
     if event.key == "a":
@@ -78,6 +84,10 @@ def mousePressed(app, event):
             image = app.loadImage("sprites/grass_block.png")  # https://hd-terraria-pics.fandom.com/wiki/Soil_Blocks
             app.player.inventoryImages["grass_block"] = image
         elif block.material == "tree":
+            app.player.inventoryCount[materialIndex] += 1
+            image = app.loadImage("sprites/wood.png")  # https://terraria.fandom.com/wiki/Woods
+            app.player.inventoryImages["wood"] = image
+        elif block.material == "wood_block":
             image = app.loadImage("sprites/wood.png")  # https://terraria.fandom.com/wiki/Woods
             app.player.inventoryImages["wood"] = image
     # place block
@@ -85,6 +95,8 @@ def mousePressed(app, event):
         i = app.player.currSelection
         currMaterial = app.player.inventory[i]
         if currMaterial != None:
+            if currMaterial == "tree":
+                currMaterial = "wood_block"
             placedBlock = Block(app, mouseRow, mouseCol, currMaterial)
             app.player.inventoryCount[i] -= 1
             app.terrain[mouseRow][mouseCol] = placedBlock
@@ -115,6 +127,7 @@ def timerFired(app):
         app.player.standAnimation(app.player.direction)
 
 def redrawAll(app, canvas):
+    drawSky(app, canvas)
     drawBlocks(app, canvas)
     app.player.draw(app, canvas)
     if app.showPerlin:
@@ -122,6 +135,10 @@ def redrawAll(app, canvas):
     drawInventorySlots(app, canvas)
     drawInventory(app, canvas)
     drawCurrSelection(app, canvas)
+
+def drawSky(app, canvas):
+    # https://gamelust.com/news/terraria-otherworld-cancelled-more-updates-coming-for-terraria/ sky image idk
+    canvas.create_image(app.width / 2, app.height / 2, image=ImageTk.PhotoImage(app.skyImage))
 
 def drawBlocks(app, canvas):
     for row in range(len(app.terrain)):
