@@ -8,14 +8,6 @@ def runTerraria():
     width, height = 800, 400
     runApp(width=width, height=height)
 
-# TODO:
-# make sure citations are enough
-# cannot generate to the left because blocks based on row, col
-# moving in tight spaces is buggy
-# make placing wood turn into wood planks i dont want to place a tree
-# please help lag
-
-
 def appStarted(app):
     app._root.resizable(False, False)
     app.timerDelay = 10
@@ -62,7 +54,6 @@ def keyPressed(app, event):
         app.player.currSelection = int(event.key) - 1
         if event.key == "0":
             app.player.currSelection = 9
-
 
 def mousePressed(app, event):
     mouseX = event.x - app.scrollX
